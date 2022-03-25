@@ -1,0 +1,95 @@
+# i3blocks config file 
+
+
+command=/home/gowl/Storage/.scripts/i3/$BLOCK_NAME
+SCRIPT_DIR=/home/gowl/Storage/.scripts/i3
+separator_block_width=15
+markup=pango
+
+
+[win-title]
+interval=persist
+
+
+[capslock]
+signal=11
+interval=once 
+
+
+[cpu/cpu-indicator ]
+interval=persist
+separator=false
+separator_block_width=0 
+
+
+[mem-ind]
+interval=10
+separator=false
+separator_block_width=0 
+
+
+[disk-ind]
+interval=40 
+
+
+[ws-display]
+interval=persist
+
+
+[win-count]
+interval=persist
+
+
+
+
+[rofi-recents]
+interval=once
+# full_text=
+full_text=
+separator=false
+separator_block_width=0 
+
+
+
+[click-clipmenu]
+full_text=
+command=CM_LAUNCHER=rofi clipmenu
+
+
+
+[net/net-ind]
+interval=3
+align=center
+separator=false
+separator_block_width=0 
+
+
+[battery/bat-ind]
+interval=10
+separator=false
+separator_block_width=0 
+
+
+[vol-indicator]
+interval=once
+signal=1 
+min_width=12
+align=center
+
+[rofi-calendar]
+interval=10 
+
+
+[shutdown_menu]
+full_text= 
+
+
+
+
+# [current-workspace]
+# signal=10
+# interval=once
+# min_width=12
+# align=center
+# separator=false
+# separator_block_width=0 
