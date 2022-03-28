@@ -3,15 +3,22 @@
 
 
 # set $i3scripts /home/.scripts/i3
-set $i3scripts /home/gowl/Storage/.scripts/i3
+# set $i3scripts /home/gowl/Storage/.scripts/i3
+
+
+set $i3scripts /home/ovidiojf/.config/i3/i3/i3gadgets
 
 ## autostarts
-exec --no-startup-id ~/.fehbg
+# exec --no-startup-id ~/.fehbg
+
 # exec --no-startup-id /home/gowl/Storage/.scripts/capstoescape.sh
 # exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape Caps_Lock' 
-exec --no-startup-id xcompmgr
+# exec --no-startup-id xcompmgr
 
 
+# For dunstify to work well
+# See more: https://github.com/dunst-project/dunst/issues/611
+exec_always --no-startup-id dunst
 
 set $mod Mod1 
 set $alt Mod1 
@@ -566,6 +573,7 @@ bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 && $i3scri
 # bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10 # decrease screen brightness
 
 bindsym --release Shift+Caps_Lock exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
+# bindsym --release Caps_Lock exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
 bindsym --release Num_Lock        exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
 bindsym --release Scroll_Lock     exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
 
