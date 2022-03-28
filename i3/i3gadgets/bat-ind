@@ -1,0 +1,110 @@
+#!/bin/bash
+
+acpi=`acpi`
+
+
+IFS=' ' read -r -a array <<< `echo $acpi | awk -F '[ ,%]' '{ b=$3" "$5; print b}'`
+
+stat="${array[0]}" 
+perc="${array[1]}" 
+
+
+# echo $stat
+# echo $perc
+
+
+#    0 f244
+#    1/4
+#    1/2
+#    3/4
+#    1 f240
+
+
+if [ $perc -lt 25 ]; then
+	bar=""
+elif [ $perc -lt 50 ]; then 
+	bar=""
+elif [ $perc -lt 75 ]; then 
+	bar=""
+elif [ $perc -lt 90 ]; then 
+	bar=""
+else
+	bar=""
+fi
+
+
+
+if [ $perc -lt 10 ]; then
+	color="#ff0000"
+elif [ $perc -lt 20 ]; then 
+	color="#ff3300"
+elif [ $perc -lt 30 ]; then 
+	color="#ff6600"
+elif [ $perc == 100 ]; then 
+	color="#008000"
+else
+	color="#ffffff"
+fi
+
+
+if [ $perc -lt 10 ] && [ $stat == "Discharging" ]; then
+	alert="!"
+else
+	alert=""
+fi
+
+
+bar=$alert$bar
+
+
+
+light="<span color='yellow'>⚡</span>"
+plug="" 
+bar="<span color='"$color"'>"$bar"</span>"
+perc="<span color='"$color"'>$perc%</span>"
+
+
+
+
+
+layout=0
+
+# Shows a plug and a bar is is charging or just a bar if not
+if [ $layout == 0 ]; then
+	if [ $stat == "Discharging" ]; then
+		text=$bar
+	else
+		text=$plug" "$bar
+	fi
+elif [ $layout == 1 ]; then
+	if [ $stat == "Discharging" ]; then
+		text=$light$bar" "$perc
+	else
+		text=$plug$bar$percent
+	fi
+elif [ $layout == 2 ]; then
+	if [ $stat == "Discharging" ]; then
+		text=$light$bar
+	else
+		text=$plug$bar
+	fi
+elif [ $layout == 3 ]; then
+	if [ $stat == "Discharging" ]; then
+		text=$light" "$perc
+	else
+		text=$plug$percent
+	fi
+fi
+
+
+notify=`echo $acpi | cut -d' ' -f3-`
+
+
+case "$BLOCK_BUTTON" in
+	1) text=$text" "$perc ;;
+	3) dunstify --replace=2 -t 2500 "Battery" "$notify" ;;
+esac
+
+echo $text
+
+

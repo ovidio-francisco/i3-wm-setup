@@ -1,0 +1,198 @@
+#!/bin/bash 
+
+checkInterface() {
+
+	INTERFACE="enp2s0"
+
+	if [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'up' ]]; then
+
+		color="#ffffff"
+		icon="<span color='$color'></span>"
+		return
+	fi
+
+
+	INTERFACE="wlp3s0"
+
+	if [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'up' ]]; then
+
+		#------------------------------------------------------------------------
+		QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }') 
+		#------------------------------------------------------------------------
+
+
+
+		# color
+		color="#ffffff"
+
+		if [[ $QUALITY -lt 90 ]]; then
+			color="#d3d3d3"
+		elif [[ $QUALITY -lt 80 ]]; then
+			color="#c0c0c0"
+		elif [[ $QUALITY -lt 70 ]]; then
+			color="#a9a9a9"
+		elif [[ $QUALITY -lt 60 ]]; then
+			color="#696969"
+		elif [[ $QUALITY -lt 50 ]]; then
+			color="#708090"
+		elif [[ $QUALITY -lt 40 ]]; then
+			color="#2f4f4f"
+		elif [[ $QUALITY -lt 30 ]]; then
+			color="#ffae00"
+		elif [[ $QUALITY -lt 20 ]]; then
+			color="#fff600"
+		elif [[ $QUALITY -lt 10 ]]; then
+			color="#ff0000"
+		else
+			color="#FFFFFF"
+		fi
+		icon="<span color='$color'></span>"
+		return
+	fi
+
+
+	color="#FF0000"
+# 
+	icon="<span color='$color'></span>"
+	# exit
+
+}
+
+
+
+calcVariables() {
+
+
+
+	# path to store the old results in
+	path="/dev/shm/$(basename $0)-${INTERFACE}"
+
+	# grabbing data for each adapter.
+	read rx < "/sys/class/net/${INTERFACE}/statistics/rx_bytes"
+	read tx < "/sys/class/net/${INTERFACE}/statistics/tx_bytes"
+
+	# get time
+	time=$(date +%s)
+
+	# write current data if file does not exist. Do not exit, this will cause
+	# problems if this file is sourced instead of executed as another process.
+	if ! [[ -f "${path}" ]]; then
+	  echo "${time} ${rx} ${tx}" > "${path}"
+	  chmod 0666 "${path}"
+	fi
+
+	# read previous state and update data storage
+	read old < "${path}"
+	echo "${time} ${rx} ${tx}" > "${path}"
+
+	# parse old data and calc time passed
+	old=(${old//;/ })
+	time_diff=$(( $time - ${old[0]} ))
+
+	# sanity check: has a positive amount of time passed
+	[[ "${time_diff}" -gt 0 ]] || exit
+
+	# calc bytes transferred, and their rate in byte/s
+	rx_diff=$(( $rx - ${old[1]} ))
+	tx_diff=$(( $tx - ${old[2]} ))
+	rx_rate=$(( $rx_diff / $time_diff ))
+	tx_rate=$(( $tx_diff / $time_diff ))
+
+	# shift by 10 bytes to get KiB/s. If the value is larger than
+	# 1024^2 = 1048576, then display MiB/s instead
+
+	# ###### incoming ####################################################### 
+	rx_kib=$(( $rx_rate >> 10 ))
+
+
+	#  ###### outgoing ##################################################### 
+	tx_kib=$(( $tx_rate >> 10 ))
+
+
+
+	colorDown='#ffffff'
+	if [[ rx_kib -gt 0 ]]; then
+		colorDown='cyan'
+	fi
+
+
+	colorUp='#ffffff'
+	if [[ tx_kib -gt 0 ]]; then
+		colorUp='#ff3300'
+	fi
+
+}
+
+printDownArrow() {
+	echo -n "<span color='$colorDown'>↓</span>"
+}
+
+
+printUpArrow() { 
+	echo -n "<span color='$colorUp'>↑</span>"
+}
+
+
+
+
+printBandwidth() { 
+
+	printDownArrow
+
+
+	if [[ "$rx_rate" -gt 1048576 ]]; then
+	  printf '%sM' "`echo "scale=1; $rx_kib / 1024" | bc`"
+	else
+	  echo -n "${rx_kib}K"
+	fi
+
+
+	printUpArrow
+
+
+	if [[ "$tx_rate" -gt 1048576 ]]; then
+	  printf '%sM' "`echo "scale=1; $tx_kib / 1024" | bc`"
+	else
+	  echo -n "${tx_kib}K"
+	fi
+
+
+	# It seems that the output must end with and \n
+	echo ""
+
+
+}
+
+
+checkInterface
+calcVariables
+
+text=$icon
+
+layout=1 
+
+#show the arrows
+if [ $layout == 0 ]; then 
+	downArrow=`printDownArrow`
+	upArrow=`printUpArrow`
+	text=$downArrow$upArrow
+fi
+
+
+
+case "$BLOCK_BUTTON" in
+	1) text="$text $QUALITY%" ;;
+	3) 
+	   con=`nmcli -t -f NAME c s -a`
+	   qlt="Quality  : $QUALITY"
+	   con="Conetion : $con"
+	   dunstify --replace=2 -t 2500 "Wifi" "$qlt\n$con" 
+	   ;;
+esac
+
+echo $text
+
+
+
+# It seems that the output must end with a \n
+# echo ""

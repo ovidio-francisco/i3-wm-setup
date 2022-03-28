@@ -21,7 +21,7 @@ signal=11
 interval=once 
 
 
-[cpu/cpu-indicator ]
+[cpu-indicator ]
 interval=persist
 separator=false
 separator_block_width=0 
@@ -62,14 +62,14 @@ command=CM_LAUNCHER=rofi clipmenu
 
 
 
-[net/net-ind]
+[net-ind]
 interval=3
 align=center
 separator=false
 separator_block_width=0 
 
 
-[battery/bat-ind]
+[bat-ind]
 interval=10
 separator=false
 separator_block_width=0 
