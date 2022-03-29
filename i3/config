@@ -9,11 +9,12 @@
 set $i3scripts /home/ovidiojf/.config/i3/i3/i3gadgets
 
 ## autostarts
-# exec --no-startup-id ~/.fehbg
+exec --no-startup-id ~/.config/wallpapers/fehbg
+exec --no-startup-id xcompmgr
 
 # exec --no-startup-id /home/gowl/Storage/.scripts/capstoescape.sh
 # exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape Caps_Lock' 
-# exec --no-startup-id xcompmgr
+# exec --no-startup-id compton
 
 
 # For dunstify to work well
