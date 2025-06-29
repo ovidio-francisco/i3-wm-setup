@@ -1,9 +1,6 @@
 # i3blocks config file 
 
-
 command=$HOME/.config/i3/i3gadgets/$BLOCK_NAME
-# SCRIPT_DIR=$HOME/.config/i3/i3gadgets
-
 
 separator_block_width=15
 markup=pango
@@ -21,7 +18,7 @@ interval=once
 [cpu-indicator]
 interval=persist
 # separator=false
-# separator_block_width=0 
+separator_block_width=20 
 
 
 # [mem-ind]
@@ -64,13 +61,13 @@ interval=persist
 interval=3
 align=center
 separator=false
-# separator_block_width=0 
+separator_block_width=5 
 
 
 [bat-ind]
 interval=10
 separator=false
-separator_block_width=0 
+separator_block_width=5 
 
 
 [vol-indicator]
