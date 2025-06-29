@@ -19,7 +19,7 @@
 #define ICON_SKULL2 ""
 #define ICON_SKULL3 ""
 // #define ICON_BRAIN  ""
-#define ICON_BRAIN  "🧠"
+#define ICON_BRAIN  ""
 #define ICON_BOMB   ""
 #define ICON_FIRE1  ""
 #define ICON_FIRE2  ""

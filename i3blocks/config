@@ -2,7 +2,7 @@
 
 
 command=$HOME/.config/i3/i3gadgets/$BLOCK_NAME
-SCRIPT_DIR=$HOME/.config/i3/i3gadgets
+# SCRIPT_DIR=$HOME/.config/i3/i3gadgets
 
 
 separator_block_width=15
