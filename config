@@ -241,7 +241,7 @@ bindsym $prefix_resize_win2+c move position center
 ################## i3-gaps stuff ###################
 
 # Necessary for i3-gaps to work properly (pixel can be any value)
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 1
 
 # Smart Gaps
 # smart_gaps on
@@ -401,10 +401,10 @@ set $acbr #e91a00
 
 # class                 border  backgr. text    indicator child_border
 # client.focused        #4c7899 #285577 #ffffff #2e9ef4   #285577
-# client.focused          #4c7899 #285577 #ffffff #4c7899   #285577
+client.focused          #4c7899 #285577 #ffffff #4c7899   #285577
 # client.focused          #4c7899 #285577 #ffffff #4c7899   #e90000
 # client.focused          #4c7899 #285577 #ffffff #e90000   #e90000
-client.focused          #4c7899 #285577 #ffffff $acbr   $acbr
+# client.focused          #4c7899 #285577 #ffffff $acbr   $acbr
 # client.focused          #4c7899 #285577 #ffffff $orange2   $orange2
 # client.focused          #4c7899 #285577 #ffffff #2e9ef4   #2e9ef4 
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
@@ -506,6 +506,11 @@ bindsym $sup+Shift+6 move container to workspace $ws6;  workspace $ws6
 bindsym $sup+Shift+7 move container to workspace $ws7;  workspace $ws7
 bindsym $sup+Shift+8 move container to workspace $ws8;  workspace $ws8
 bindsym $sup+Shift+9 move container to workspace $ws9;  workspace $ws9
+
+
+# Move focused container to next/prev workspace
+bindsym $sup+$alt+h exec --no-startup-id $i3scripts/move-to-relative-workspace -1
+bindsym $sup+$alt+l exec --no-startup-id $i3scripts/move-to-relative-workspace  1
 
 
 # Go to a new workspace
