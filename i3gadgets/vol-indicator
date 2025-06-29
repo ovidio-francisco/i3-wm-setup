@@ -30,7 +30,7 @@ fi
 
 
 text=$icon
-text="<span color='$color'>$text</span>"
+# text="<span color='$color'>$text</span>"
 
 echo $text
 

@@ -2,29 +2,29 @@
 ######################################################################## 
 
 
-# set $i3scripts /home/.scripts/i3
-# set $i3scripts /home/gowl/Storage/.scripts/i3
-
-
-set $i3scripts /home/ovidiojf/.config/i3/i3/i3gadgets
+set $i3scripts /home/manj/.config/i3/scripts
+set $gadgets  ~/.config/i3/i3gadgets
 
 ## autostarts
-exec --no-startup-id ~/.config/wallpapers/fehbg
+exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/fehbg
 exec --no-startup-id xcompmgr
-
-# exec --no-startup-id /home/gowl/Storage/.scripts/capstoescape.sh
-# exec --no-startup-id xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape Caps_Lock' 
-# exec --no-startup-id compton
-
 
 # For dunstify to work well
 # See more: https://github.com/dunst-project/dunst/issues/611
 exec_always --no-startup-id dunst
 
+
+
 set $mod Mod1 
 set $alt Mod1 
 set $agr Mod5 
 set $sup Mod4 
+
+
+
+
+
+
 
 # Font for window titles. 
 font pango:monospace 8 
@@ -35,7 +35,7 @@ bindsym $sup+b bar mode toggle
 
 
 # Set inner/outer gaps
-set $default_inner_gap 13
+set $default_inner_gap 10
 gaps inner $default_inner_gap
 gaps outer 0
 
@@ -125,9 +125,17 @@ bindsym $sup+Shift+c reload
 bindsym $alt+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'What do you want to do?' \
+	-B 'Shutdown' 'systemctl poweroff' \
+	-B 'Restart i3' 'i3-msg restart' \
+	-B 'Logout' 'i3-msg exit' \
+	-B 'Lock Screen' 'i3lock' \
+"
 
 
+# Rofi shutdown menu
+bindsym Ctrl+$alt+Delete exec --no-startup-id $gadgets/shutdown_menu
 
 
 
@@ -237,7 +245,7 @@ bindsym $prefix_resize_win2+c move position center
 ################## i3-gaps stuff ###################
 
 # Necessary for i3-gaps to work properly (pixel can be any value)
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 0
 
 # Smart Gaps
 # smart_gaps on
@@ -517,12 +525,20 @@ bindsym $sup+u        workspace prev_on_output
 
 bindsym $sup+ccedilla  workspace back_and_forth
 
-bindsym $sup+h exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
-bindsym $sup+j exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
-bindsym $sup+k exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
-bindsym $sup+l exec --no-startup-id $i3scripts/goto-ws 2 2 → 
+# bindsym $sup+h exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
+# bindsym $sup+j exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
+# bindsym $sup+k exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
+# bindsym $sup+l exec --no-startup-id $i3scripts/goto-ws 2 2 → 
 
 
+bindsym $sup+Left exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
+bindsym $sup+Down exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
+bindsym $sup+Up exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
+bindsym $sup+Right exec --no-startup-id $i3scripts/goto-ws 2 2 → 
+
+
+bindsym $sup+l   workspace next_on_output 
+bindsym $sup+h    workspace prev_on_output 
 
 # Codding Layout
 bindsym $sup+c exec --no-startup-id $i3scripts/goto-coding
@@ -530,8 +546,8 @@ bindsym $sup+c exec --no-startup-id $i3scripts/goto-coding
 
 
 # Shutdown_menu
-bindsym $alt+Delete  exec --no-startup-id $i3scripts/shutdown_menu
-bindsym $alt+Shift+e exec --no-startup-id $i3scripts/shutdown_menu
+# bindsym $alt+Delete  exec --no-startup-id $i3scripts/shutdown_menu
+# bindsym $alt+Shift+e exec --no-startup-id $i3scripts/shutdown_menu
 
 # Gaps
 bindsym $sup+F12       gaps inner current set 0
@@ -541,7 +557,7 @@ bindsym $sup+Shift+F12 gaps inner current set $default_inner_gap
 
 workspace_auto_back_and_forth yes
 
-# focus_follows_mouse no
+focus_follows_mouse no
 
 
 
@@ -581,7 +597,7 @@ bindsym --release Scroll_Lock     exec --no-startup-id pkill -SIGRTMIN+11 i3bloc
 
 # Start a Terminal
 bindsym $alt+Return exec xfce4-terminal
-bindsym $sup+Return exec xfce4-terminal
+bindsym $sup+Return exec --no-startup-id alacritty
 bindsym $alt+Control+t exec urxvt
 bindsym $alt+F12 exec xfce4-terminal --drop-down
 
@@ -640,9 +656,9 @@ workspace "Chromium" gaps inner 0
 # 800  / 1.7786 = 449.79
 # 900  / 1.7786 = 506.01
 
-for_window [class="Chromium"]              floating enable, resize set 1368 754, move position -1 -1, border pixel 0
-for_window [class="Leafpad"]               floating enable
-for_window [class="Nautilus"]              floating enable, resize set 1000 620, move position center, border pixel 0
+# for_window [class="Chromium"]              floating enable, resize set 1368 754, move position -1 -1, border pixel 0
+# for_window [class="Leafpad"]               floating enable
+# for_window [class="Nautilus"]              floating enable, resize set 1000 620, move position center, border pixel 0
 for_window [class="SpeedCrunch"]           floating enable, resize set 720 440, move position center, border pixel 1
 for_window [instance="rangerterm"]         floating enable, resize set 900 506, move position center
 for_window [window_role="^floatingterminal"]     floating enable, resize set 1341 724, move position center

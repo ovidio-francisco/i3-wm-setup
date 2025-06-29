@@ -59,11 +59,9 @@ bar=$alert$bar
 
 
 light="<span color='yellow'>⚡</span>"
-plug="" 
+plug=" " 
 bar="<span color='"$color"'>"$bar"</span>"
 perc="<span color='"$color"'>$perc%</span>"
-
-
 
 
 
@@ -74,13 +72,13 @@ if [ $layout == 0 ]; then
 	if [ $stat == "Discharging" ]; then
 		text=$bar
 	else
-		text=$plug" "$bar
+		text=$bar$plug
 	fi
 elif [ $layout == 1 ]; then
 	if [ $stat == "Discharging" ]; then
-		text=$light$bar" "$perc
+		text=$light$bar$perc
 	else
-		text=$plug$bar$percent
+		text=$plug$bar$perc
 	fi
 elif [ $layout == 2 ]; then
 	if [ $stat == "Discharging" ]; then
@@ -90,9 +88,9 @@ elif [ $layout == 2 ]; then
 	fi
 elif [ $layout == 3 ]; then
 	if [ $stat == "Discharging" ]; then
-		text=$light" "$perc
+		text=$light$perc
 	else
-		text=$plug$percent
+		text=$plug$perc
 	fi
 fi
 

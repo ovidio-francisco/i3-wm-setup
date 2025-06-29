@@ -7,7 +7,7 @@ checkInterface() {
 	if [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'up' ]]; then
 
 		color="#ffffff"
-		icon="<span color='$color'></span>"
+		icon="<span color='$color'>🖧</span>"
 		return
 	fi
 

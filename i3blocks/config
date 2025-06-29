@@ -1,9 +1,6 @@
 # i3blocks config file 
 
 
-# command=/home/gowl/Storage/.scripts/i3/$BLOCK_NAME
-# SCRIPT_DIR=/home/gowl/Storage/.scripts/i3
-
 command=$HOME/.config/i3/i3gadgets/$BLOCK_NAME
 SCRIPT_DIR=$HOME/.config/i3/i3gadgets
 
@@ -21,20 +18,20 @@ signal=11
 interval=once 
 
 
-[cpu-indicator ]
+[cpu-indicator]
 interval=persist
-separator=false
-separator_block_width=0 
+# separator=false
+# separator_block_width=0 
 
 
-[mem-ind]
-interval=10
-separator=false
-separator_block_width=0 
+# [mem-ind]
+# interval=10
+# separator=false
+# separator_block_width=0 
 
 
-[disk-ind]
-interval=40 
+# [disk-ind]
+# interval=40 
 
 
 [ws-display]
@@ -47,18 +44,19 @@ interval=persist
 
 
 
-[rofi-recents]
-interval=once
-# full_text=
-full_text=
-separator=false
-separator_block_width=0 
+# [rofi-recents]
+# interval=once
+# # full_text=
+# full_text=
+# separator=false
+# separator_block_width=0 
 
 
+# [click-clipmenu]
+# full_text=
+# command=CM_LAUNCHER=rofi clipmenu
 
-[click-clipmenu]
-full_text=
-command=CM_LAUNCHER=rofi clipmenu
+
 
 
 
@@ -66,7 +64,7 @@ command=CM_LAUNCHER=rofi clipmenu
 interval=3
 align=center
 separator=false
-separator_block_width=0 
+# separator_block_width=0 
 
 
 [bat-ind]

@@ -1,0 +1,93 @@
+#!/bin/bash 
+
+case "$BLOCK_BUTTON" in
+    4) pamixer -i 5 ;;
+    5) pamixer -d 5 ;;
+esac
+
+
+mute=`pamixer --get-mute`
+vol=`pamixer --get-volume`
+
+if [ $mute == 'true' ]; then
+	icon=""
+	color="#FF6600"
+	notification="$icon Muted"
+else  
+	if [ $vol -lt 25 ]; then 
+		icon=""
+	elif [ $vol -lt 75 ]; then
+		icon="" 
+	elif [ $vol -lt 96 ]; then
+		icon="" 
+	else 
+		icon="" 
+	fi
+
+	color="#FFFFFF"
+	notification="$icon $vol%"
+fi	
+
+
+text=$icon
+text="<span color='$color'>$text</span>"
+
+echo $text
+
+
+seconds=`cut /proc/uptime -d. -f1`
+if [ $seconds -le 100 ]; then 
+	exit
+fi 
+
+
+
+volumeBar() {
+	len=20
+	vol=$1
+
+	# thickChar='◼'
+	# thinChar='◻'
+	# thickChar='▰'
+	# thinChar='▱'
+	thickChar='▮'
+	thinChar='▯'
+
+	thickLen=$( printf '%.0f' $(echo "scale=2; $len * ($vol/100)" | bc ) )
+	thinLen=$( echo "$len-$thickLen" | bc )
+
+
+	for (( i=0; i<$thickLen; i++ )); do 
+		thick=$thick$thickChar 
+	done
+
+	for (( i=0; i<$thinLen; i++ )); do 
+		thin=$thin$thinChar 
+	done
+
+	echo $thick$thin 
+}
+
+
+bar=$( volumeBar $vol ) 
+dunstify --replace=1 -t 1800 "Volume $notification" "$bar"
+
+
+
+# https://changaco.oy.lc/unicode-progress-bars/
+# thick=$(printf "%0.s$thickChar" $(eval echo "{0..$thickLen}"))
+
+
+
+
+# ├
+# ●○
+# ■□
+# ▪▫
+# ▬▭
+# ◼◻
+# ▰   ▱
+# ◼▭
+# ▮▯
+
+
