@@ -4,8 +4,10 @@ cap=$(xset -q | grep Caps | awk '{print $4}')
 if [ $cap = 'on' ]; then
 	echo "<span color='#00ff00'> CAPS ON</span>"
 else
-	echo ""
+	echo -n "<span color='#222222'>CAPS</span>"
 fi
 
+# ⇩
+# ⇧
 
 
