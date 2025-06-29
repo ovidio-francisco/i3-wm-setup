@@ -2,10 +2,10 @@
 ######################################################################## 
 
 
-set $i3scripts /home/manj/.config/i3/scripts
-set $gadgets  ~/.config/i3/i3gadgets
+set $i3scripts ~/.config/i3/scripts
+set $gadgets   ~/.config/i3/i3gadgets
 
-## autostarts
+# autostarts
 exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/fehbg
 exec --no-startup-id xcompmgr
 
@@ -19,10 +19,6 @@ set $mod Mod1
 set $alt Mod1 
 set $agr Mod5 
 set $sup Mod4 
-
-
-
-
 
 
 
@@ -525,20 +521,21 @@ bindsym $sup+u        workspace prev_on_output
 
 bindsym $sup+ccedilla  workspace back_and_forth
 
+bindsym $sup+Left exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
+bindsym $sup+Down exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
+bindsym $sup+Up exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
+bindsym $sup+Right exec --no-startup-id $i3scripts/goto-ws 2 2 → 
+
+bindsym $sup+l   workspace next_on_output 
+bindsym $sup+h    workspace prev_on_output 
+
+
 # bindsym $sup+h exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
 # bindsym $sup+j exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
 # bindsym $sup+k exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
 # bindsym $sup+l exec --no-startup-id $i3scripts/goto-ws 2 2 → 
 
 
-bindsym $sup+Left exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
-bindsym $sup+Down exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
-bindsym $sup+Up exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
-bindsym $sup+Right exec --no-startup-id $i3scripts/goto-ws 2 2 → 
-
-
-bindsym $sup+l   workspace next_on_output 
-bindsym $sup+h    workspace prev_on_output 
 
 # Codding Layout
 bindsym $sup+c exec --no-startup-id $i3scripts/goto-coding
@@ -674,3 +671,8 @@ for_window [instance="codetesting"]        resize shrink height 175
 
 # bindsym Ctrl+Shift+b exec --no-startup-id $i3scripts/launch-chromium 2 2 → 
 # bindsym Ctrl+Shift+f exec --no-startup-id $i3scripts/launch-nautilus 2 2 → 
+
+
+
+
+
