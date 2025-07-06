@@ -1,8 +1,0 @@
-#!/bin/bash
-
-wsnum=`i3-msg -t get_workspaces | sed 's/},{/\n/g' | grep '"focused":true' | cut -d, -f1 | cut -d: -f2 | tr -d '"'`
-
-
-wscount=`i3-save-tree --workspace $wsnum | grep \"class\": | wc -l`
-
-echo $wscount

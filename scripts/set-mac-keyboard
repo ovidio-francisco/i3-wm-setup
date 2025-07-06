@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Wait for X session to be fully ready (1 second is usually enough)
+sleep 1
+
+# Only apply on MacBooks
+if grep -q "MacBook" /sys/class/dmi/id/product_name; then
+  setxkbmap -layout us -variant mac
+fi

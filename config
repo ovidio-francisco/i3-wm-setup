@@ -2,18 +2,22 @@
 ######################################################################## 
 
 
+# autostarts
+exec --no-startup-id xcompmgr
+exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/theWallpaper
+exec_always --no-startup-id ~/.config/i3/scripts/set-mac-keyboard
+
+
+
+
+################################
+# Set some variables and configs
+################################
+
+
+
 set $i3scripts ~/.config/i3/scripts
 set $gadgets   ~/.config/i3/i3gadgets
-
-# autostarts
-exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/fehbg
-exec --no-startup-id xcompmgr
-
-# For dunstify to work well
-# See more: https://github.com/dunst-project/dunst/issues/611
-exec_always --no-startup-id dunst
-
-
 
 set $mod Mod1 
 set $alt Mod1 
@@ -21,19 +25,33 @@ set $agr Mod5
 set $sup Mod4 
 
 
+workspace_auto_back_and_forth yes
+focus_follows_mouse no
 
 # Font for window titles. 
-font pango:monospace 8 
-#font pango:DejaVu Sans Mono 8
-
-bindsym $sup+b bar mode toggle
-
+font pango:DejaVu Sans Mono 8
 
 
 # Set inner/outer gaps
 set $default_inner_gap 10
 gaps inner $default_inner_gap
 gaps outer 0
+
+
+
+###################
+# The nice keybinds
+###################
+
+
+bindsym $sup+b bar mode toggle
+
+
+
+
+########################
+# The amazing status bar
+########################
 
 
 bar {
@@ -56,8 +74,9 @@ bar {
         # active_workspace   #333333 #5f676a #ffffff
         # inactive_workspace #333333 #222222 #888888
         # urgent_workspace   #2f343a #900000 #ffffff
-        # binding_mode       #2f343a #900000 #ffffff
-        binding_mode       #900000 #000000 #ffffff
+		# binding_mode       #2f343a #900000 #ffffff
+		# binding_mode       #900000 #000000 #ffffff
+		binding_mode       #000000 #000000 #ffffff
         # statusline #111111  
 		# separator #fefefe
     } 
@@ -69,38 +88,47 @@ bar {
 floating_modifier $sup
 
 # kill focused window
+bindsym $sup+Shift+q       kill
+bindsym $sup+F4            kill
 bindsym $alt+Shift+q       kill
 bindsym $alt+F4            kill
 
 # start dmenu (a program launcher)
 bindsym $sup+d  exec --no-startup-id dmenu_run 
-bindsym $alt+F1 exec --no-startup-id dmenu_run
-bindsym $alt+F2 exec --no-startup-id rofi -show run
-bindsym $alt+F3 exec --no-startup-id rofi -show window
-bindsym Ctrl+Escape exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -nb black -sf black -b -i '
-bindsym $alt+Escape exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -nb black -nf white -sb red -sf black -b -i '
+bindsym $sup+F1 exec --no-startup-id rofi -show run
+bindsym $sup+F2 exec --no-startup-id rofi -show window
+bindsym $sup+Escape exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -nb black -sf black -b -i '
+bindsym Ctrl+Escape exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -nb black -nf white -sb red -sf black -b -i '
 
 # change focus
 bindsym $alt+h focus left
 bindsym $alt+j focus down
 bindsym $alt+k focus up
 bindsym $alt+l focus right
+bindsym $sup+y focus left
+bindsym $sup+u focus down
+bindsym $sup+i focus up
+bindsym $sup+o focus right
 
 
 # move focused window
-bindsym $alt+Shift+h move left
-bindsym $alt+Shift+j move down
-bindsym $alt+Shift+k move up
-bindsym $alt+Shift+l move right
+bindsym $sup+Shift+h move left
+bindsym $sup+Shift+j move down
+bindsym $sup+Shift+k move up
+bindsym $sup+Shift+l move right
 
 
 # enter fullscreen mode for the focused container
 bindsym $sup+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
+# - toggle alternate between the layouts
+# - default changes to tilling
 bindsym $sup+s layout stacking
 bindsym $sup+t layout tabbed
 bindsym $sup+e layout toggle split
+bindsym $sup+p layout toggle                   
+bindsym $sup+w layout default                  
 
 # toggle tiling / floating
 bindsym $sup+space floating toggle ;  move position center
@@ -110,6 +138,8 @@ bindsym Ctrl+Shift+space focus mode_toggle
 
 # focus the parent container
 bindsym $sup+Shift+a focus parent
+
+
 
 # focus the child container
 bindsym $sup+Shift+d focus child
@@ -425,13 +455,13 @@ set $launch_mode Launch: [f]irefox [c]hromium [n]autilus [t]erminal [l]eafpad [s
 bindsym $alt+p mode "$launch_mode" 
 
 mode "$launch_mode" {
-	bindsym f workspace "" ; exec firefox  ; mode "default"; 
-	bindsym c workspace "" ; exec chromium ; mode "default"; 
-	bindsym n workspace "" ; exec --no-startup-id nautilus ; mode "default"; 
+	bindsym f workspace "" ; exec --no-startup-id firefox  ;      mode "default"; 
+	bindsym c workspace "" ; exec --no-startup-id google-chrome ; mode "default"; 
+	bindsym n workspace "" ; exec --no-startup-id nautilus ;      mode "default"; 
 
-    bindsym t exec xfce4-terminal --role floatingterminal   ; mode "default";  
-	bindsym l exec leafpad;                                          ; mode "default";  
-	bindsym s exec speedcrunch                                       ; mode "default";  
+    bindsym t exec xfce4-terminal --role floatingterminal   ;      mode "default";  
+	bindsym l exec leafpad;                                 ;      mode "default";  
+	bindsym s exec speedcrunch                              ;      mode "default";  
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -448,12 +478,10 @@ bindsym Ctrl+Shift+b exec --no-startup-id $i3scripts/launchers/launch-chromium
 bindsym Ctrl+Shift+f exec --no-startup-id $i3scripts/launchers/launch-nautilus
 
 bindsym Ctrl+Shift+r exec urxvt -name rangerterm -e ranger   
-# bindsym Ctrl+Shift+t exec urxvt -name vimnotes -e $i3scripts/take-note
 bindsym Ctrl+Shift+i exec urxvt -name nmtuiwin -e nmtui
-
-
-
 bindsym Ctrl+Shift+j split v ; exec urxvt -name codetesting ;
+# bindsym Ctrl+Shift+t exec urxvt -name vimnotes -e $i3scripts/take-note
+
 
 
 # Print Screen
@@ -519,21 +547,19 @@ bindsym $sup+n exec --no-startup-id $i3scripts/goto-next-workspace
 
 
 # workspace next_on_output
+bindsym $sup+l        workspace next_on_output 
+bindsym $sup+h        workspace prev_on_output 
 bindsym $sup+period   workspace next_on_output 
 bindsym $sup+comma    workspace prev_on_output 
-bindsym $sup+i        workspace next_on_output 
-bindsym $sup+u        workspace prev_on_output 
+
 
 bindsym $sup+ccedilla  workspace back_and_forth
 
-bindsym $sup+Left exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
-bindsym $sup+Down exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
-bindsym $sup+Up exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
+
+bindsym $sup+Left  exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
+bindsym $sup+Down  exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
+bindsym $sup+Up    exec --no-startup-id $i3scripts/goto-ws 2 2 ↑ 
 bindsym $sup+Right exec --no-startup-id $i3scripts/goto-ws 2 2 → 
-
-bindsym $sup+l   workspace next_on_output 
-bindsym $sup+h    workspace prev_on_output 
-
 
 # bindsym $sup+h exec --no-startup-id $i3scripts/goto-ws 2 2 ← 
 # bindsym $sup+j exec --no-startup-id $i3scripts/goto-ws 2 2 ↓ 
@@ -545,26 +571,13 @@ bindsym $sup+h    workspace prev_on_output
 # Codding Layout
 bindsym $sup+c exec --no-startup-id $i3scripts/goto-coding
 
-
-
-# Shutdown_menu
-# bindsym $alt+Delete  exec --no-startup-id $i3scripts/shutdown_menu
-# bindsym $alt+Shift+e exec --no-startup-id $i3scripts/shutdown_menu
-
 # Gaps
 bindsym $sup+F12       gaps inner current set 0
 bindsym $sup+Shift+F12 gaps inner current set $default_inner_gap
 
 
-
-workspace_auto_back_and_forth yes
-
-focus_follows_mouse no
-
-
-
 # move focus
-bindsym $alt+Tab          focus right 
+bindsym $alt+Tab          focus next 
 bindsym $alt+Shift+Tab    focus left 
 bindsym $alt+period       focus right 
 bindsym $alt+comma        focus left 
@@ -580,10 +593,11 @@ bindsym XF86AudioMute exec        --no-startup-id pamixer -t   && pkill -RTMIN+1
 
 
 # Screen brightness controls
-#
+bindsym XF86MonBrightnessDown exec --no-startup-id $i3scripts/set-brightness 10-
+bindsym XF86MonBrightnessUp   exec --no-startup-id $i3scripts/set-brightness 10+
 
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 && $i3scripts/brightness-ind 
-bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 && $i3scripts/brightness-ind 
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 && $i3scripts/brightness-ind 
+# bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10 && $i3scripts/brightness-ind 
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 # bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 10
 
@@ -600,6 +614,7 @@ bindsym --release Scroll_Lock     exec --no-startup-id pkill -SIGRTMIN+11 i3bloc
 # Start a Terminal
 bindsym $alt+Return exec xfce4-terminal
 bindsym $sup+Return exec --no-startup-id alacritty
+# bindsym $sup+Return exec --no-startup-id xfce4-terminal
 bindsym $alt+Control+t exec urxvt
 bindsym $alt+F12 exec xfce4-terminal --drop-down
 
@@ -607,9 +622,9 @@ bindsym $alt+F12 exec xfce4-terminal --drop-down
 
 
 
-bindsym $alt+Ctrl+r exec recents  # my application in ~/bin/recents
-bindsym $alt+Ctrl+e exec leafpad
-bindsym $alt+Ctrl+n exec leafpad
+bindsym $alt+Ctrl+r exec $HOME/.local/bin/recents              # installed with pipx
+# bindsym $alt+Ctrl+e exec leafpad
+# bindsym $alt+Ctrl+n exec leafpad
 bindsym $alt+Ctrl+s exec speedcrunch 
 bindsym $alt+Ctrl+p exec CM_LAUNCHER=rofi clipmenu
 
@@ -651,7 +666,6 @@ bindsym --whole-window $alt+button2 floating toggle
 
 
 
-workspace "Chromium" gaps inner 0 
 
 # 1366 x 768
 # 1366 / 768 = 1.7786
@@ -659,25 +673,15 @@ workspace "Chromium" gaps inner 0
 # 900  / 1.7786 = 506.01
 
 # for_window [class="Chromium"]              floating enable, resize set 1368 754, move position -1 -1, border pixel 0
-# for_window [class="Leafpad"]               floating enable
-# for_window [class="Nautilus"]              floating enable, resize set 1000 620, move position center, border pixel 0
-for_window [class="SpeedCrunch"]           floating enable, resize set 720 440, move position center, border pixel 1
-for_window [instance="rangerterm"]         floating enable, resize set 900 506, move position center
-for_window [window_role="^floatingterminal"]     floating enable, resize set 1341 724, move position center
-for_window [instance="nmtuiwin"]           floating enable, resize set 500 606, move position center
-for_window [instance="vimnotes"]           floating enable, resize set 350 456, move position center, border normal 1, title_format " Notable"
-for_window [instance="codetesting"]        resize shrink height 175
-
-# for_window [class="Yad"] floating enable
-# for_window [class="Chromium"]              border pixel 0 
-
-# bindsym $sup+o exec i3-save-tree > ~/tree.txt
-
-
-# bindsym Ctrl+Shift+b exec --no-startup-id $i3scripts/launch-chromium 2 2 → 
 # bindsym Ctrl+Shift+f exec --no-startup-id $i3scripts/launch-nautilus 2 2 → 
 
 
+
+
+
+# For dunstify to work well
+# See more: https://github.com/dunst-project/dunst/issues/611
+# exec_always --no-startup-id dunst
 
 
 

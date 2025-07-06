@@ -1,9 +1,0 @@
-#! /bin/sh
-
-case "$BLOCK_BUTTON" in
-    1|2|3)
-		recents
-esac
-
-# echo ""
-# echo ""

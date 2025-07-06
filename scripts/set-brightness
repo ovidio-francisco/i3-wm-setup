@@ -1,0 +1,32 @@
+#!/bin/bash
+
+INPUT="$1"
+
+MAX=$(brightnessctl max)
+MIN=$(echo "$MAX * 0.1" | bc)
+
+# Set brightness
+brightnessctl --min-value=$MIN set "$INPUT%" > /dev/null
+
+# Get current brightness
+CUR=$(brightnessctl get)
+
+# Calculate percentage (rounded)
+PERCENT=$(echo "scale=2; $CUR * 100 / $MAX" | bc)
+PERCENT=$(printf "%.0f" "$PERCENT")
+
+# Build bar
+LEN=20
+THICK_CHAR='▮'
+THIN_CHAR='▯'
+
+FILLED=$(printf "%.0f" "$(echo "$LEN * $PERCENT / 100" | bc)")
+EMPTY=$((LEN - FILLED))
+
+BAR=""
+for ((i = 0; i < FILLED; i++)); do BAR+=$THICK_CHAR; done
+for ((i = 0; i < EMPTY; i++)); do BAR+=$THIN_CHAR; done
+
+# Notify
+ICON=""
+dunstify --replace=999 -t 1500 "$ICON Brightness $PERCENT%" "$BAR"
