@@ -35,10 +35,12 @@ separator_block_width=23
 interval=persist
 
 
-[win-count]
+# [win-count]
+# interval=persist
+
+
+[win-count-all-ws]
 interval=persist
-
-
 
 
 # [rofi-recents]

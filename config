@@ -151,6 +151,8 @@ bindsym $sup+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $alt+Shift+r restart
 
+
+
 # exit i3 (logs you out of your X session)
 
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'What do you want to do?' \
