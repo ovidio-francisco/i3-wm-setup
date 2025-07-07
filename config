@@ -152,7 +152,6 @@ bindsym $sup+Shift+c reload
 bindsym $alt+Shift+r restart
 
 
-
 # exit i3 (logs you out of your X session)
 
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'What do you want to do?' \

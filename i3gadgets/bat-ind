@@ -29,29 +29,19 @@ perc=$highest_perc
 
 
 # Determine battery icon based on percentage
-if [ "$perc" -lt 25 ]; then
-    bar=""
-elif [ "$perc" -lt 50 ]; then 
-    bar=""
-elif [ "$perc" -lt 75 ]; then 
-    bar=""
-elif [ "$perc" -lt 90 ]; then 
-    bar=""
-else
-    bar=""
+if   [ "$perc" -lt 25 ]; then bar=""
+elif [ "$perc" -lt 50 ]; then bar=""
+elif [ "$perc" -lt 75 ]; then bar=""
+elif [ "$perc" -lt 90 ]; then bar=""
+else bar=""
 fi
 
 # Determine color based on percentage
-if [ "$perc" -lt 10 ]; then
-    color="#ff0000"
-elif [ "$perc" -lt 20 ]; then 
-    color="#ff3300"
-elif [ "$perc" -lt 30 ]; then 
-    color="#ff6600"
-elif [ "$perc" == 100 ]; then 
-    color="#008000"
-else
-    color="#ffffff"
+if   [ "$perc" -lt 10 ]; then color="#ff0000"
+elif [ "$perc" -lt 20 ]; then color="#ff3300"
+elif [ "$perc" -lt 30 ]; then color="#ff6600"
+elif [ "$perc" == 100 ]; then color="#008000"
+else color="#ffffff"
 fi
 
 # Alert for low battery
@@ -64,60 +54,32 @@ fi
 # Build the battery bar
 bar=$alert$bar
 
-light="<span color='yellow'>⚡</span>"
+yellow_light="<span color='yellow'>⚡</span>"
+light="⚡"
 plug="" 
-bullet="・" 
 bar="<span color='"$color"'>"$bar"</span>"
 perc="<span color='"$color"'>$perc%</span>"
 
 
 
-layout=0
 
-
-# Display the text depending on the battery status and layout
-if [ $layout == 0 ]; then
-    if [ "$stat" == "Discharging" ]; then
-        text=$bar
-    elif [ "$stat" == "Full" ]; then
-        text=$bar
-    elif [ "$stat" == "Not" ]; then
-        text=$plug
-    elif [ "$stat" == "Charging" ]; then
-        text=$plug$bar
-    fi
-elif [ $layout == 1 ]; then
-    if [ "$stat" == "Discharging" ]; then
-        text=$bar
-    else
-        text=$plug$bar
-    fi
-elif [ $layout == 2 ]; then
-    if [ "$stat" == "Discharging" ]; then
-        text=$light$bar$perc
-    else
-        text=$plug$bar$perc
-    fi
-elif [ $layout == 3 ]; then
-    if [ "$stat" == "Discharging" ]; then
-        text=$light$bar
-    else
-        text=$plug$bar
-    fi
-elif [ $layout == 4 ]; then
-    if [ "$stat" == "Discharging" ]; then
-        text=$light$perc
-    else
-        text=$plug$perc
-    fi
+if   [ "$stat" == "Discharging" ]; then text=$bar
+elif [ "$stat" == "Full" ];        then text=$bar
+elif [ "$stat" == "Not" ];         then text=$plug
+elif [ "$stat" == "Charging" ];    then text=$light$bar
 fi
 
-notify=$(echo "$acpi" | cut -d' ' -f3-)
 
+
+# Left-click adds percentage to display 
+# Right-click sends notification        
 case "$BLOCK_BUTTON" in
-    1) text=$text" "$perc ;;  # Left-click adds percentage to display
-    3) dunstify --replace=2 -t 2500 "Battery" "$notify" ;;  # Right-click sends notification
+    1) text=$text" "$perc ;;  
+    3) notify=$(echo "$acpi" | cut -d' ' -f3-)
+	   dunstify --replace=2 -t 4000 "Battery" "$notify" 
+	   ;;
 esac
+
 
 echo "$text"
 
