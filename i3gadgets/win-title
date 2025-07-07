@@ -5,17 +5,15 @@ import sys
 
 i3 = i3ipc.Connection()
 
-def printwincount(i3, e):
+def printwintitle(i3, e):
 
     win = i3.get_tree().find_focused()
-    title = win.window_title
 
-    msg = title
-
-    if(msg == None):
+    if(not win.window or not win.window_title):
         print()
         sys.stdout.flush()
     else:
+        msg = win.window_title
         max=70
         l=len(msg)
 
@@ -30,25 +28,17 @@ def printwincount(i3, e):
 
 
 
-printwincount(i3, None)
-i3.on('window::new'     , printwincount)
-i3.on('window::close'   , printwincount)
-i3.on('window::title'   , printwincount)
-i3.on('window::focus'   , printwincount)
-i3.on('workspace::focus', printwincount)
+printwintitle(i3, None)
+i3.on('window::new'     , printwintitle)
+i3.on('window::close'   , printwintitle)
+i3.on('window::title'   , printwintitle)
+i3.on('window::focus'   , printwintitle)
+i3.on('workspace::focus', printwintitle)
 
 i3.main()
 
 #  https://github.com/vivien/i3blocks/issues/190
 #  https://i3ipc-python.readthedocs.io/en/latest/events.html
 #  https://github.com/altdesktop/i3ipc-python
-
-
 #  print("<span color='#3F3F3F'>"+msg+"</span>")
-
-
-
-
-
-
 
