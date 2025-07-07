@@ -50,14 +50,10 @@ volumeBar() {
 	# thinChar='◻'
 	# thickChar='▰'
 	# thinChar='▱'
-	thickChar='▮'
-	thinChar='▯'
-
-
+	# thickChar='▮'
+	# thinChar='▯'
 	thickChar='■'
 	thinChar='□'
-
-
 
 	thickLen=$( printf '%.0f' $(echo "scale=2; $len * ($vol/100)" | bc ) )
 	thinLen=$( echo "$len-$thickLen" | bc )
