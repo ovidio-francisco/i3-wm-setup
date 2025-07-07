@@ -6,6 +6,7 @@
 exec --no-startup-id xcompmgr
 exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/theWallpaper
 exec_always --no-startup-id ~/.config/i3/scripts/set-mac-keyboard
+exec_always --no-startup-id clipmenud
 
 
 
