@@ -40,7 +40,8 @@ fi
 if   [ "$perc" -lt 10 ]; then color="#ff0000"
 elif [ "$perc" -lt 20 ]; then color="#ff3300"
 elif [ "$perc" -lt 30 ]; then color="#ff6600"
-elif [ "$perc" == 100 ]; then color="#008000"
+# elif [ "$perc" == 100 ]; then color="#008000"
+elif [ "$perc" == 100 ]; then color="#ffffff"
 else color="#ffffff"
 fi
 
@@ -54,21 +55,19 @@ fi
 # Build the battery bar
 bar=$alert$bar
 
-yellow_light="<span color='yellow'>⚡</span>"
 light="⚡"
 plug="" 
-bar="<span color='"$color"'>"$bar"</span>"
-perc="<span color='"$color"'>$perc%</span>"
-
+bar="<span color='$color'>$bar</span>"
+perc="<span color='$color'>$perc%</span>"
+dot="<span color='#00ff00'>•</span>"
 
 
 
 if   [ "$stat" == "Discharging" ]; then text=$bar
-elif [ "$stat" == "Full" ];        then text=$bar
+elif [ "$stat" == "Full" ];        then text=$bar$dot
 elif [ "$stat" == "Not" ];         then text=$plug
 elif [ "$stat" == "Charging" ];    then text=$light$bar
 fi
-
 
 
 # Left-click adds percentage to display 
