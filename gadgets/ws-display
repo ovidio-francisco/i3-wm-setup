@@ -4,7 +4,7 @@ import i3ipc
 import sys
 
 i3 = i3ipc.Connection()
-gost="<span color='black'>.</span>"
+gost="<span color='black'>..</span>"
 
 a = [ gost+"0",
      "▀"+gost, gost+"▀", 

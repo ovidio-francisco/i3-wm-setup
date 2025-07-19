@@ -1,0 +1,15 @@
+#!/bin/bash
+
+layout=$(setxkbmap -query | awk '/layout/ {print $2}')
+
+
+if [ "$layout" = "br_hacked" ]; then
+	layout="us_hacked"
+else
+	layout="br_hacked"
+fi
+
+setxkbmap -layout $layout$variant
+
+pkill -RTMIN+12 i3blocks
+

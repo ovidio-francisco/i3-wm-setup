@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Wait for X session to be fully ready (1 second is usually enough)
+# Set keyboard layout by machine at i3 startup
+
+# Wait for X session to be fully ready
 sleep 1
 
 # Only apply on MacBooks

@@ -1,6 +1,6 @@
 # i3blocks config file 
 
-command=$HOME/.config/i3/i3gadgets/$BLOCK_NAME
+command=$HOME/.config/i3/gadgets/$BLOCK_NAME
 
 separator_block_width=15
 markup=pango
@@ -21,41 +21,18 @@ interval=persist
 separator_block_width=23
 
 
-# [mem-ind]
-# interval=10
-# separator=false
-# separator_block_width=0 
-
-
-# [disk-ind]
-# interval=40 
+[win-count-all-ws]
+interval=persist
 
 
 [ws-display]
 interval=persist
 
 
-# [win-count]
-# interval=persist
-
-
-[win-count-all-ws]
-interval=persist
-
-
-# [rofi-recents]
-# interval=once
-# # full_text=
-# full_text=
-# separator=false
-# separator_block_width=0 
-
-
-# [click-clipmenu]
-# full_text=
-# command=CM_LAUNCHER=rofi clipmenu
-
-
+[kb-layout-ind]
+signal=12
+interval=auto 
+min_width=13
 
 
 
@@ -78,8 +55,8 @@ signal=1
 min_width=12
 align=center
 
-[rofi-calendar]
-interval=10 
+[date-time]
+interval=5
 
 
 [shutdown_menu]
@@ -91,6 +68,32 @@ full_text=
 # -----------------------------------
 
 
+# [mem-ind]
+# interval=10
+# separator=false
+# separator_block_width=0 
+
+
+# [disk-ind]
+# interval=40 
+
+
+# [win-count]
+# interval=persist
+
+
+# [rofi-recents]
+# interval=once
+# # full_text=
+# full_text=
+# separator=false
+# separator_block_width=0 
+
+
+# [click-clipmenu]
+# full_text=
+# command=CM_LAUNCHER=rofi clipmenu
+
 
 
 # [current-workspace]
@@ -100,3 +103,6 @@ full_text=
 # align=center
 # separator=false
 # separator_block_width=0 
+
+
+

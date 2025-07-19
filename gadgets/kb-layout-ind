@@ -1,0 +1,12 @@
+#!/bin/bash
+
+layout=$(setxkbmap -query | awk '/layout/ {print $2}')
+
+if [[ $layout == br* ]]; then
+  echo "br"
+else
+  echo "us"
+fi
+
+
+# setxkbmap -query | awk '/layout/ {print $2}'
